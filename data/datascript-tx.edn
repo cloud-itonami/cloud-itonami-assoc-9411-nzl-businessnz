@@ -1,0 +1,25 @@
+;; data/datascript-tx.edn — DataScript tx-data derived from src/association/facts.cljc
+;; `association.facts/catalog` (ADR-2607141700 Wave 0). Same shape as sibling files.
+
+[#:association-rule{:id "businessnz.predecessor-employers-federation-1902"
+                     :title "New Zealand Employers Federation founded, BusinessNZ's earliest predecessor body (Wikipedia)"
+                     :association "businessnz"
+                     :isic "9411"
+                     :country "NZL"
+                     :kind :governance-program
+                     :url "https://en.wikipedia.org/wiki/Business_New_Zealand"
+                     :url-provenance :wikipedia-corroborated
+                     :established-date "1902"
+                     :retrieved-at "2026-07-17"
+                     :topic [:governance]}
+ #:association-rule{:id "businessnz.founding-2001-merger"
+                     :title "BusinessNZ founded via merger of NZ Employers Federation and NZ Manufacturers Federation (Wikipedia)"
+                     :association "businessnz"
+                     :isic "9411"
+                     :country "NZL"
+                     :kind :governance-program
+                     :url "https://en.wikipedia.org/wiki/Business_New_Zealand"
+                     :url-provenance :wikipedia-corroborated
+                     :established-date "2001"
+                     :retrieved-at "2026-07-17"
+                     :topic [:governance]}]
