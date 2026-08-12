@@ -1,0 +1,90 @@
+;; The BUSINESSNZ source catalog, as Kotoba.
+;;
+;; GENERATED from data/datascript-tx.edn, which src/association/facts.cljc
+;; reads as data. Both are the same catalog; this one reaches the Kotoba
+;; oracle, wasm and both native ISAs, which the .cljc cannot.
+;;
+;; `:topic` is a SET in the source. A set has no order and `topic` is
+;; indexed by position, so the generator uses the order the data file
+;; writes. `by-topic-id` answers by name and is unaffected.
+;;
+;; Parity: test/association_facts_kotoba_parity_test.clj compares every
+;; field of every entry against the .cljc, so this file cannot drift from
+;; the data without the suite saying so.
+
+(ns association-facts
+  (:export [main association-covered? entry-count entry-field topic-count
+            topic by-topic-count by-topic-id coverage-note]))
+
+(defn association-covered? [a :string] :bool (string=? a "businessnz"))
+
+(defn entry-count [a :string] :i64 (if (association-covered? a) 2 0))
+
+(defn valid-entry? [a :string i :i64] :bool
+  (if (association-covered? a) (if (< i 0) false (< i 2)) false))
+
+(defn entry-field [a :string i :i64 f :string] [:option :string]
+  (if (valid-entry? a i)
+    (if (= i 0)
+      (cond
+        (string=? f "id") (option-some-of [:option :string] "businessnz.predecessor-employers-federation-1902")
+        (string=? f "title") (option-some-of [:option :string] "New Zealand Employers Federation founded, BusinessNZ's earliest predecessor body (Wikipedia)")
+        (string=? f "association") (option-some-of [:option :string] "businessnz")
+        (string=? f "isic") (option-some-of [:option :string] "9411")
+        (string=? f "country") (option-some-of [:option :string] "NZL")
+        (string=? f "kind") (option-some-of [:option :string] "governance-program")
+        (string=? f "url") (option-some-of [:option :string] "https://en.wikipedia.org/wiki/Business_New_Zealand")
+        (string=? f "url-provenance") (option-some-of [:option :string] "wikipedia-corroborated")
+        (string=? f "established-date") (option-some-of [:option :string] "1902")
+        (string=? f "retrieved-at") (option-some-of [:option :string] "2026-07-17")
+        :else (option-none-of [:option :string])
+        )
+      (cond
+        (string=? f "id") (option-some-of [:option :string] "businessnz.founding-2001-merger")
+        (string=? f "title") (option-some-of [:option :string] "BusinessNZ founded via merger of NZ Employers Federation and NZ Manufacturers Federation (Wikipedia)")
+        (string=? f "association") (option-some-of [:option :string] "businessnz")
+        (string=? f "isic") (option-some-of [:option :string] "9411")
+        (string=? f "country") (option-some-of [:option :string] "NZL")
+        (string=? f "kind") (option-some-of [:option :string] "governance-program")
+        (string=? f "url") (option-some-of [:option :string] "https://en.wikipedia.org/wiki/Business_New_Zealand")
+        (string=? f "url-provenance") (option-some-of [:option :string] "wikipedia-corroborated")
+        (string=? f "established-date") (option-some-of [:option :string] "2001")
+        (string=? f "retrieved-at") (option-some-of [:option :string] "2026-07-17")
+        :else (option-none-of [:option :string])
+        )
+      )
+    (option-none-of [:option :string])))
+
+(defn topic-count [a :string i :i64] :i64
+  (if (valid-entry? a i)
+    (if (= i 0) 1 (if (= i 1) 1 0))
+    0))
+
+(defn topic [a :string i :i64 t :i64] [:option :string]
+  (if (valid-entry? a i)
+    (if (= i 0)
+      (if (= t 0) (option-some-of [:option :string] "governance") (option-none-of [:option :string]))
+    (if (= i 1)
+      (if (= t 0) (option-some-of [:option :string] "governance") (option-none-of [:option :string]))
+    (option-none-of [:option :string])))
+    (option-none-of [:option :string])))
+
+(defn by-topic-count [a :string candidate :string] :i64
+  (if (association-covered? a)
+    (if (string=? candidate "governance") 2 0)
+    0))
+
+(defn by-topic-id [a :string candidate :string i :i64] [:option :string]
+  (if (association-covered? a)
+    (if (= i 0)
+      (if (string=? candidate "governance") (entry-field a 0 "id") (option-none-of [:option :string]))
+      (option-none-of [:option :string]))
+    (option-none-of [:option :string])))
+
+(defn coverage-note [a :string] [:option :string]
+  (if (association-covered? a)
+    (option-some-of [:option :string]
+      "cloud-itonami-assoc-9411-nzl-businessnz Wave 0 (ADR-2607141700): 2 businessnz entries seeded with an official citation. Extend the sovereign catalog; never fabricate a rule id/url.")
+    (option-none-of [:option :string])))
+
+(defn main [] :i64 0)
