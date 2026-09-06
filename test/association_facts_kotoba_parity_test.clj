@@ -25,16 +25,26 @@
 (def ^:private slug "businessnz")
 (def ^:private fields
   ["id" "title" "association" "isic" "country" "kind" "url" "url-provenance"
-   "established-date" "retrieved-at"])
+   "source-article" "source-quote" "established-date" "last-revised-date"
+   "date-unknown-because" "retrieved-at"])
 (def ^:private kw->field
   {"id" :association-rule/id "title" :association-rule/title
    "association" :association-rule/association "isic" :association-rule/isic
    "country" :association-rule/country "kind" :association-rule/kind
    "url" :association-rule/url "url-provenance" :association-rule/url-provenance
+   "source-article" :association-rule/source-article
+   "source-quote" :association-rule/source-quote
    "established-date" :association-rule/established-date
+   "last-revised-date" :association-rule/last-revised-date
+   "date-unknown-because" :association-rule/date-unknown-because
    "retrieved-at" :association-rule/retrieved-at})
 (def ^:private entries (vec (facts/spec-basis slug)))
-(def ^:private topic-order [["governance"] ["governance"]])
+(def ^:private topic-order
+  "Written out on purpose. Deriving this from `entries` would compare the cljc
+   against itself and assert nothing about the port."
+  [["governance"] ["governance"] ["governance"] ["governance"] ["governance"]
+   ["membership"] ["membership"] ["membership"] ["membership"] ["membership"]
+   ["international"] ["statistics"] ["statistics"]])
 
 (deftest the-fixture-reads-a-real-catalog
   ;; An empty catalog compares equal to an empty port.
@@ -64,11 +74,18 @@
         (is (= nm (present (call 'topic slug i t))))))))
 
 (deftest by-topic-answers-the-same-entries
-  (doseq [names topic-order t names]
+  ;; Every position, not just the first. With one entry per topic the two are
+  ;; the same assertion; with five they are not, and checking only index 0
+  ;; would pass a port that dropped entries 1..4 of every topic.
+  (doseq [t (distinct (mapcat identity topic-order))]
     (testing t
       (let [cljc (mapv :association-rule/id (facts/by-topic slug (keyword t)))]
+        (is (pos? (count cljc)) "a topic nobody has makes the loop below vacuous")
         (is (= (count cljc) (call 'by-topic-count slug t)))
-        (is (= (first cljc) (present (call 'by-topic-id slug t 0)))))))
+        (doseq [[pos id] (map-indexed vector cljc)]
+          (is (= id (present (call 'by-topic-id slug t pos)))))
+        (is (nil? (present (call 'by-topic-id slug t (count cljc))))
+            "and it must run out exactly where the cljc does"))))
   (is (zero? (call 'by-topic-count slug "no-such-topic")))
   (is (nil? (present (call 'by-topic-id slug "no-such-topic" 0)))))
 
