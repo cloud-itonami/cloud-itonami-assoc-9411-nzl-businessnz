@@ -24,7 +24,7 @@
 
   An association not in `catalog` has NO spec-basis, full stop; never
   fabricate one."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (def catalog
   "association-slug -> vector of association-rule entries."

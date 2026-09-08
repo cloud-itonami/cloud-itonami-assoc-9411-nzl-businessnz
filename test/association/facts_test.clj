@@ -1,7 +1,7 @@
 (ns association.facts-test
   (:require [clojure.test :refer [deftest is testing]]
             [clojure.edn :as edn]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [association.facts :as facts]))
 
 (def ^:private authored
