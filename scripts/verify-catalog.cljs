@@ -36,7 +36,7 @@
 
 (ns verify-catalog
   (:require [clojure.edn :as edn]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             ["fs" :as fs]
             ["os" :as os]
             ["path" :as path]
@@ -151,7 +151,7 @@
            (when (and (string? (at "source-article"))
                       (re-matches #"\d+" (at "source-article"))
                       (string? (at "title"))
-                      (not (str/includes? (str/lower-case (at "title"))
+                      (not (str/includes? (str/lower (at "title"))
                                           (str "article " (at "source-article")))))
              [(f :article-not-in-title
                  (str "title does not name article " (at "source-article")))])
