@@ -15,7 +15,7 @@
 
 (ns gen-kotoba-port
   (:require [clojure.edn :as edn]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             ["fs" :as fs]))
 
 (def argv (vec (remove #(str/ends-with? % "gen-kotoba-port.cljs")
