@@ -5,7 +5,7 @@
 ;;
 ;;   :source-article        which page or section of the source the entry reads
 ;;   :source-quote          the verbatim span the entry rests on, so that
-;;                          `nbb scripts/verify-catalog.cljs --live` can fetch
+;;                          `kbb --backend sci scripts/verify-catalog.cljk --live` can fetch
 ;;                          the source and ask whether it still says it
 ;;   :date-unknown-because  why the source gives neither an established nor a
 ;;                          last-revised date. Present ONLY when both are

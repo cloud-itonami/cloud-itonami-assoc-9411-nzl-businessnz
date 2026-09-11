@@ -5,7 +5,7 @@
 ;; (cloud-itonami-compliance-fact-federation), Wave 0.
 ;;
 ;; Every entry names the page it comes from and the verbatim span it rests on,
-;; so `nbb scripts/verify-catalog.cljs --live` can fetch the source and fail if
+;; so `kbb --backend sci scripts/verify-catalog.cljk --live` can fetch the source and fail if
 ;; the document no longer says it. Reachability alone would not do: a URL that
 ;; answers 200 without the claim looks exactly like one that supports it.
 ;;

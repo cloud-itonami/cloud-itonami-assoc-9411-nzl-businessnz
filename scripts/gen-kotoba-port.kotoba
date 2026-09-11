@@ -1,9 +1,9 @@
-#!/usr/bin/env nbb
+#!/usr/bin/env kbb
 ;; scripts/gen-kotoba-port.cljs — write src/association_facts.kotoba from
 ;; data/datascript-tx.edn.
 ;;
-;;   nbb scripts/gen-kotoba-port.cljs           rewrite the port
-;;   nbb scripts/gen-kotoba-port.cljs --check   exit 1 if the port on disk
+;;   kbb --backend sci scripts/gen-kotoba-port.cljk           rewrite the port
+;;   kbb --backend sci scripts/gen-kotoba-port.cljk --check   exit 1 if the port on disk
 ;;                                              is not what this would write
 ;;
 ;; Ported from cloud-itonami-assoc-9411-ury-ciu, which wrote it for the same
@@ -167,7 +167,7 @@
         (do (println (str "ok — " out-path " matches the generator ("
                           (count entries) " entries)")) (.exit js/process 0))
         (do (println (str "STALE: " out-path " is not what the generator writes."))
-            (println "  run: nbb scripts/gen-kotoba-port.cljs")
+            (println "  run: kbb --backend sci scripts/gen-kotoba-port.cljk")
             (.exit js/process 1))))
     (do (fs/writeFileSync out-path text)
         (println (str "wrote " out-path " — " (count entries) " entries")))))

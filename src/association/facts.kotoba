@@ -11,7 +11,7 @@
   scripts/gen-kotoba-port.cljs.
 
   Every entry names the page it comes from and the verbatim span it
-  rests on. `nbb scripts/verify-catalog.cljs --live` fetches each source
+  rests on. `kbb --backend sci scripts/verify-catalog.cljk --live` fetches each source
   and fails if the document no longer says it -- reachability is not
   support, because a URL that answers 200 without the claim looks
   exactly like one that carries it.
