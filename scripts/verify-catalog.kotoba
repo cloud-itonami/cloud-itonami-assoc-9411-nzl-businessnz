@@ -1,9 +1,9 @@
-#!/usr/bin/env nbb
+#!/usr/bin/env kbb
 ;; scripts/verify-catalog.cljs — check the BusinessNZ catalog against its own
 ;; sources.
 ;;
-;;   nbb scripts/verify-catalog.cljs            structural only (offline)
-;;   nbb scripts/verify-catalog.cljs --live     also fetch every :url and require
+;;   kbb --backend sci scripts/verify-catalog.cljk            structural only (offline)
+;;   kbb --backend sci scripts/verify-catalog.cljk --live     also fetch every :url and require
 ;;                                              every :source-quote to be in it
 ;;
 ;; Ported from cloud-itonami-assoc-9411-ury-ciu, plus one check this catalog

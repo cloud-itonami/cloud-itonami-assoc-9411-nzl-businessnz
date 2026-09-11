@@ -50,8 +50,8 @@ say so.
 ## Verifying the catalog
 
 ```bash
-nbb scripts/verify-catalog.cljs           # structural only (offline)
-nbb scripts/verify-catalog.cljs --live    # fetch every source, check every quote
+kbb --backend sci scripts/verify-catalog.cljk           # structural only (offline)
+kbb --backend sci scripts/verify-catalog.cljk --live    # fetch every source, check every quote
 ```
 
 Every entry names the page it comes from (`:source-article`) and the
@@ -78,7 +78,7 @@ same.
 - `src/association/facts.cljc` — the same entries inline, held to the
   data file by `test/association/facts_test.clj`.
 - `src/association_facts.kotoba` — **generated** from the data file by
-  `nbb scripts/gen-kotoba-port.cljs` (`--check` fails if someone hand-edits
+  `kbb --backend sci scripts/gen-kotoba-port.cljk` (`--check` fails if someone hand-edits
   it). This copy reaches the Kotoba oracle, wasm and both native ISAs,
   which the `.cljc` cannot.
 - `schema/association-rule.edn` — DataScript schema.
